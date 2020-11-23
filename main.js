@@ -38,50 +38,51 @@ const reviews = [
   },
 ];
 
-const image = document.querySelector(".images");
-let author = document.querySelector("#author");
+const images = document.querySelector(".images");
+const author = document.querySelector("#author");
 const reviewsJob = document.querySelector(".reviews--job");
 const reviewsMessage = document.querySelector(".reviews--message");
-const prevBtn = document.querySelector(".prev-btn");
-const afterBtn = document.querySelector(".after-btn");
-const surpriseBtn = document.querySelector(".surprise--me");
+const surpriseMe = document.querySelector(".surprise--me");
 const sideNumber = document.querySelector(".side--number");
-let count = 0;
-window.addEventListener("DOMContentLoaded", function () {
+const prevBtn = document.querySelector(".prev-btn ");
+const afterBtn = document.querySelector(".after-btn");
+window.addEventListener("DOMContentLoaded", (e) => {
+  let count = 0;
+
   const showAll = (person) => {
     const items = reviews[person];
     sideNumber.innerHTML = items.id;
+    images.src = items.img;
     author.innerHTML = items.name;
     reviewsJob.innerHTML = items.job;
     reviewsMessage.innerHTML = items.message;
-    image.src = items.img;
   };
-  showAll(count); //make first element appear when loading
+  showAll(count);
 
-  // random reviews
-  surpriseBtn.addEventListener("click", (e) => {
+  surpriseMe.addEventListener("click", (e) => {
     e.preventDefault();
-    showAll(makeRandom());
+    const random = randomReviews();
+    showAll(random);
   });
 
-  const makeRandom = () => {
+  const randomReviews = (e) => {
     return Math.floor(Math.random() * reviews.length);
   };
 
-  //   afterBtn
-  afterBtn.addEventListener("click", (e) => {
-    count++;
-    if (count > reviews.length - 1) {
-      count = 0;
-    }
-    showAll(count);
-  });
-
-  //   afterBtn
+  // prev button
   prevBtn.addEventListener("click", (e) => {
     count--;
     if (count < 0) {
       count = reviews.length - 1;
+    }
+    showAll(count);
+  });
+
+  // after button ;
+  afterBtn.addEventListener("click", (e) => {
+    count++;
+    if (count > reviews.length - 1) {
+      count = 0;
     }
     showAll(count);
   });
